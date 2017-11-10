@@ -1,8 +1,13 @@
 var audioContext = new AudioContext();
 
-var RenderOscillators = React.createClass({
+class RenderOscillators extends React.Component {
+    constructor(props){
+        super(props)
+        this.startOscPlaying = this.startOscPlaying.bind(this);
+        this.stopOscPlaying = this.stopOscPlaying.bind(this);
+    }
 
-    startOscPlaying: function(id) {
+    startOscPlaying(id) {
         var osc = this.props.entries;
 
         osc.forEach(function(val, index) {
@@ -12,9 +17,9 @@ var RenderOscillators = React.createClass({
                 val.osc.start(audioContext.currentTime)
             }
         });
-    },
+    }
 
-    stopOscPlaying: function(id) {
+    stopOscPlaying(id) {
         var osc = this.props.entries;
 
         osc.forEach(function(val, index) {
@@ -25,9 +30,9 @@ var RenderOscillators = React.createClass({
 
             }
         });
-    },
+    }
 
-    render: function() {
+    render() {
 
 
         var oscillatorCircles = this.props.entries.map((item) => {
@@ -58,23 +63,31 @@ var RenderOscillators = React.createClass({
         );
     }
 
-});
+};
 
 
-var AppContainer = React.createClass({
+class AppContainer extends React.Component {
 
-    getInitialState: function() {
-        return {
+    constructor(props){
+        super(props)
+        this.state = { 
+     
             oscillatorList: [{
                 osc: audioContext.createOscillator(),
                 freq: 200,
                 id: "1",
                 circleColor: "orange"
             }]
-        };
-    },
+        }
 
-    makeOscillator: function(e) {
+        this.makeOscillator = this.makeOscillator.bind(this);
+
+        
+    }
+        
+
+
+    makeOscillator(e) {
         e.preventDefault();
         var oscArray = this.state.oscillatorList;
         console.log(this.circleColor.value);
@@ -92,10 +105,11 @@ var AppContainer = React.createClass({
         this.frequency.value = "";
 
 
-    },
+    }
+ 
 
 
-    render: function() {
+    render() {
 
         return (
             <section >
@@ -123,7 +137,7 @@ var AppContainer = React.createClass({
             </section>
         )
     }
-})
+}
 
 
 ReactDOM.render(
@@ -140,9 +154,9 @@ ReactDOM.render(
 /*___________________BEGIN how to work with state
 
 In react you DO NOT push data to any array of YOUR choosing to save state. 
-Instead, you MUST use a method named getInitialState, It looks like this:
+Instead, you MUST use a property named state, It looks like this:
 
-getInitialState: function() {
+  this.state = {
         return {
             ListOfStuff: [{
                 prop1:"stuff",
@@ -150,6 +164,13 @@ getInitialState: function() {
             }]
         };
     },
+
+
+// Get state:
+
+    this.setState({
+        oscillatorList: []
+    });
 
 You CAN and SHOULD set arrays as property values of the object that getInitialState returns.You always store
 list items in this way.
@@ -189,11 +210,6 @@ you have to do it via a callback like this:
 
 
 _____________________END how to pass argument to event listener functions__*/
-
-
-
-
-
 
 
 
