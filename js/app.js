@@ -47,11 +47,19 @@ class RenderOscillators extends React.Component {
 
             }
 
-            return <li  key={item.id} style={oscCircle} 
-                onMouseDown = {() => this.startOscPlaying(item.id)}
+            const container = {
+                display:"inline-block"
+            }
+
+            return <div  key={item.id} style={container}> 
+                <li style={oscCircle}  onMouseDown = {() => this.startOscPlaying(item.id)}
                 onMouseUp = {() => this.stopOscPlaying(item.id)}>
-               <span className="circle-freq-text"> {item.freq + " hz"}</span>
-                </li>
+               <div className="circle-freq-text"> 
+               <p>{item.freq + " hz"}</p>
+               </div>
+               </li>
+               <div className = "delete-osc" onClick = {()=>{this.props.deleteOscillator(event,item.id)}}>X</div>
+                </div>
         });
 
 
@@ -81,6 +89,7 @@ class AppContainer extends React.Component {
         }
 
         this.makeOscillator = this.makeOscillator.bind(this);
+        this.deleteOscillator= this.deleteOscillator.bind(this);
 
         
     }
@@ -102,7 +111,28 @@ class AppContainer extends React.Component {
             oscillatorList: oscArray
         });
 
-        this.frequency.value = "";
+        this.frequency.value = "300";
+
+
+    }
+
+    deleteOscillator(event, id){
+        console.log(event);
+         event.stopPropagation();
+
+        var tempOscList = this.state.oscillatorList;
+
+       var updateOscList = tempOscList.filter(function(val,index,array){
+            if(val.id !== id){
+                return val
+            }
+
+        });
+
+         this.setState({
+            oscillatorList: updateOscList
+        });
+
 
 
     }
@@ -129,10 +159,10 @@ class AppContainer extends React.Component {
             </form>
             </nav>
                 <p id="instructions">Type a frequency, select a color and then click submit. Click the circles that appear to hear 
-            the oscillator play </p>
+            the oscillator play. Click the small circle to delete it </p>
             <div id="main-container">
         
-            <RenderOscillators entries={this.state.oscillatorList} />
+            <RenderOscillators entries={this.state.oscillatorList} deleteOscillator={this.deleteOscillator} />
             </div>
             </section>
         )
