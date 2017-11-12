@@ -52,14 +52,16 @@ class RenderOscillators extends React.Component {
             }
 
             return <div  key={item.id} style={container}> 
-                <li style={oscCircle}  onMouseDown = {() => this.startOscPlaying(item.id)}
-                onMouseUp = {() => this.stopOscPlaying(item.id)}>
-               <div className="circle-freq-text"> 
-               <p>{item.freq + " hz"}</p>
-               </div>
-               </li>
-               <div className = "delete-osc" onClick = {()=>{this.props.deleteOscillator(event,item.id)}}>X</div>
-                </div>
+                       <li style={oscCircle}  onMouseDown = {() => this.startOscPlaying(item.id)}
+                           onMouseUp = {() => this.stopOscPlaying(item.id)}>
+                           <div className="circle-freq-text"> 
+                               <p>{item.freq + " hz"}</p>
+                           </div>
+                       </li>
+                       <div className = "delete-osc" onClick = {()=>{this.props.deleteOscillator(event,item.id)}}>.
+                                X
+                       </div>
+                   </div>
         });
 
 
@@ -144,26 +146,26 @@ class AppContainer extends React.Component {
         return (
             <section >
       
-             <nav>
-            <form onSubmit = {this.makeOscillator}>
-            <input type = "number" ref={(value) => this.frequency = value} defaultValue="300"/>
-              <select name="oscColor" ref={(value) => this.circleColor = value}>
-                  <option value="red">Red</option>
-                  <option value="blue">Blue</option>
-                  <option value="green">Green</option>
-                  <option value="orange">Orange</option>
-                  <option value="purple">Purple</option>
-              </select>
-            <input type = "submit"/>
+                <nav>
+                    <form onSubmit = {this.makeOscillator}>
+                        <input type = "number" ref={(value) => this.frequency = value} defaultValue="300"/>
+                        <select name="oscColor" ref={(value) => this.circleColor = value}>
+                            <option value="red">Red</option>
+                            <option value="blue">Blue</option>
+                            <option value="green">Green</option>
+                            <option value="orange">Orange</option>
+                            <option value="purple">Purple</option>
+                        </select>
+                        <input type = "submit"/>
         
-            </form>
-            </nav>
+                    </form>
+                </nav>
                 <p id="instructions">Type a frequency, select a color and then click submit. Click the circles that appear to hear 
             the oscillator play. Click the small circle to delete it </p>
-            <div id="main-container">
-        
-            <RenderOscillators entries={this.state.oscillatorList} deleteOscillator={this.deleteOscillator} />
-            </div>
+           
+                <div id="main-container">
+                    <RenderOscillators entries={this.state.oscillatorList} deleteOscillator={this.deleteOscillator} />
+                </div>
             </section>
         )
     }
