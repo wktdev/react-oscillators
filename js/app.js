@@ -183,6 +183,13 @@ ReactDOM.render(
 
 // NOTES ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+/*__________________BEGIN note on seeting event listeners on components
+
+You always have to pass a method to a child element via a prop....don't forget that!
+
+__________________BEGIN note on seeting event listeners on components */
+
+
 /*___________________BEGIN how to work with state
 
 In react you DO NOT push data to any array of YOUR choosing to save state. 
